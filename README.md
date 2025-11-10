@@ -16,7 +16,7 @@ Este é um sistema web (MVP) para cadastro e gerenciamento de horários de aulas
 * **Validação de Conflitos:** O backend impede automaticamente a criação de alocações que gerem conflitos de horário (seja para o **Laboratório** ou para o **Professor**).
 * **Consulta em Grade:** Uma tela de consulta que exibe todas as aulas em uma grade semanal, com filtros dinâmicos por Curso, Professor ou Laboratório.
 
-## 🛠️ Stack Tecnológica & Arquitetura
+## 🛠️ Stack & Arquitetura
 
 Este projeto utiliza uma arquitetura de microsserviços local:
 
