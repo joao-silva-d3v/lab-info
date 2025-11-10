@@ -84,7 +84,7 @@ cd sistema-labs
 
 ### 2\. Inicie o Banco de Dados (Docker)
 
-Verifique se o Docker está rodando no Windows. Então, no terminal WSL, rode:
+Verifique se o Docker está rodando. Então, no terminal WSL, rode:
 
 ```bash
 docker compose up -d
@@ -103,7 +103,7 @@ npm install
 node server.js
 ```
 
-  * *Você deve ver a mensagem que o MongoDB foi conectado com sucesso. Deixe este terminal rodando.*
+  * *Você deve ver a mensagem que o MongoDB foi conectado com sucesso e rodando na porta 5000. Deixe este terminal rodando.*
 
 ### 4\. Execute o Frontend (Terminal 2 ou pelo VSCode Local)
 
