@@ -112,7 +112,7 @@ function ExemploPage() {
 - `.status-active` - Status ativo (verde)
 - `.status-inactive` - Status inativo (vermelho)
 
-## 🎯 Páginas Atualizadas
+## 🎯 Páginas para atualizar
 
 ✅ **App.jsx** - Layout sidebar com ícones e navegação moderna
 ✅ **InstituicaoPage.jsx** - Template base com cards e formulários
@@ -124,9 +124,6 @@ function ExemploPage() {
 ✅ **LaboratorioPage.jsx** - Capacidade e localização com ícones
 ✅ **BlocoPage.jsx** - Horários com ícones de turno e ordenação visual
 
-## 🎉 Status: COMPLETO!
-
-**Todas as 8 páginas** do sistema foram atualizadas com o novo design moderno!
 
 ## 🎨 Variáveis CSS Disponíveis
 
@@ -151,7 +148,7 @@ function ExemploPage() {
 --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 ```
 
-## 💡 Dicas de Implementação
+## 💡 O que pode usar
 
 1. **Ícones**: Use react-icons/fa para consistência
 2. **Confirmações**: Use window.confirm() para exclusões
@@ -159,6 +156,6 @@ function ExemploPage() {
 4. **Estados vazios**: Sempre mostre mensagem quando não há dados
 5. **Responsividade**: O design já é responsivo por padrão
 
-## 🚀 Próximos Passos
+## 🚀 Passo
 
 Para aplicar o novo design nas páginas restantes, siga o padrão das páginas já atualizadas, especialmente a **InstituicaoPage.jsx** que serve como template base.
