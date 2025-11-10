@@ -40,7 +40,7 @@ Para rodar este projeto, você precisará ter as seguintes ferramentas instalada
     * [Node.js (LTS)](https://github.com/nvm-sh/nvm) (Instalado via `nvm`).
     * [Docker](https://www.docker.com/).
 * **No Windows:**
-    * Um editor de código (ex: [VS Code](https://code.visualstudio.com/) com a extensão WSL).
+    * Um editor de código (ex: [VS Code](https://code.visualstudio.com/)).
 
 ## 📦 Arquivos de Configuração
 
