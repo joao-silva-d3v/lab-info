@@ -46,7 +46,7 @@ Para rodar este projeto, você precisará ter as seguintes ferramentas instalada
 
 O projeto requer os seguintes arquivos (que estão no `.gitignore` e precisam ser criados manualmente):
 
-### 1. `docker-compose.yml`
+### 1. `docker-compose.yml` (esse já está contido no projeto, o passo dele pode ser ignorado.)
 
 Este arquivo deve ser criado na **raiz do projeto (`sistema-labs/`)**. Ele define o serviço do banco de dados MongoDB.
 
