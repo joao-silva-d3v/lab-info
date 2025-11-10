@@ -69,7 +69,6 @@ Este arquivo deve ser criado na **pasta `backend/`**. Ele diz ao Node.js como se
 
 ```.env
 MONGO_URI=mongodb://root:example@localhost:27017/lab_system?authSource=admin
-PORT=5000
 ```
 
 ## ▶️ Como Executar (Ambiente de Desenvolvimento)
