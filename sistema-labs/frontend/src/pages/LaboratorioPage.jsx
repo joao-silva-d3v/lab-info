@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { FaSave, FaEdit, FaTrash, FaTimes, FaUsers, FaMapMarkerAlt } from 'react-icons/fa';
 import { createCrudService } from '../services/api';
 
 const laboratorioService = createCrudService('/laboratorios');
@@ -43,11 +44,13 @@ function LaboratorioPage() {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await laboratorioService.delete(id);
-      loadItems();
-    } catch (error) {
-      console.error('Error deleting item:', error);
+    if (window.confirm('Tem certeza que deseja excluir este laboratório?')) {
+      try {
+        await laboratorioService.delete(id);
+        loadItems();
+      } catch (error) {
+        console.error('Error deleting item:', error);
+      }
     }
   };
 
@@ -58,87 +61,154 @@ function LaboratorioPage() {
 
   return (
     <div>
-      <h1>Laboratórios</h1>
-      <div className="form-container">
-        <div className="form-section">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Nome:</label>
-              <input
-                type="text"
-                value={formData.nome}
-                onChange={(e) => setFormData({...formData, nome: e.target.value})}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Capacidade:</label>
-              <input
-                type="number"
-                value={formData.capacidade}
-                onChange={(e) => setFormData({...formData, capacidade: e.target.value})}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Localização:</label>
-              <input
-                type="text"
-                value={formData.localizacao}
-                onChange={(e) => setFormData({...formData, localizacao: e.target.value})}
-              />
-            </div>
-            <div className="form-group">
-              <label>
+      <div className="page-header">
+        <h1 className="page-title">Laboratórios</h1>
+        <p className="page-subtitle">Gerencie os laboratórios de informática e suas capacidades</p>
+      </div>
+      
+      <div className="content-grid">
+        <div className="card">
+          <div className="card-header">
+            <h2 className="card-title">
+              {editingId ? 'Editar Laboratório' : 'Novo Laboratório'}
+            </h2>
+          </div>
+          <div className="card-body">
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label">Nome do Laboratório</label>
                 <input
-                  type="checkbox"
-                  checked={formData.status}
-                  onChange={(e) => setFormData({...formData, status: e.target.checked})}
+                  type="text"
+                  className="form-input"
+                  value={formData.nome}
+                  onChange={(e) => setFormData({...formData, nome: e.target.value})}
+                  placeholder="Ex: Lab Informática 01"
+                  required
                 />
-                Ativo
-              </label>
-            </div>
-            <button type="submit" className="btn btn-primary">
-              {editingId ? 'Atualizar' : 'Criar'}
-            </button>
-            {editingId && (
-              <button type="button" className="btn btn-cancel" onClick={handleCancel}>
-                Cancelar
-              </button>
-            )}
-          </form>
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">
+                  <FaUsers style={{marginRight: '0.5rem'}} />
+                  Capacidade (alunos)
+                </label>
+                <input
+                  type="number"
+                  className="form-input"
+                  value={formData.capacidade}
+                  onChange={(e) => setFormData({...formData, capacidade: e.target.value})}
+                  placeholder="30"
+                  min="1"
+                  required
+                />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">
+                  <FaMapMarkerAlt style={{marginRight: '0.5rem'}} />
+                  Localização
+                </label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={formData.localizacao}
+                  onChange={(e) => setFormData({...formData, localizacao: e.target.value})}
+                  placeholder="Ex: Bloco A - Sala 101"
+                />
+              </div>
+              
+              <div className="form-group">
+                <div className="form-checkbox">
+                  <input
+                    type="checkbox"
+                    className="checkbox"
+                    id="status"
+                    checked={formData.status}
+                    onChange={(e) => setFormData({...formData, status: e.target.checked})}
+                  />
+                  <label htmlFor="status" className="form-label">Laboratório Ativo</label>
+                </div>
+              </div>
+              
+              <div className="action-buttons">
+                <button type="submit" className="btn btn-primary">
+                  <FaSave />
+                  {editingId ? 'Atualizar' : 'Criar'}
+                </button>
+                {editingId && (
+                  <button type="button" className="btn btn-secondary" onClick={handleCancel}>
+                    <FaTimes />
+                    Cancelar
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
         
-        <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Capacidade</th>
-                <th>Localização</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map(item => (
-                <tr key={item._id}>
-                  <td>{item.nome}</td>
-                  <td>{item.capacidade}</td>
-                  <td>{item.localizacao}</td>
-                  <td>{item.status ? 'Ativo' : 'Inativo'}</td>
-                  <td>
-                    <button className="btn btn-edit" onClick={() => handleEdit(item)}>
-                      Editar
-                    </button>
-                    <button className="btn btn-delete" onClick={() => handleDelete(item._id)}>
-                      Excluir
-                    </button>
-                  </td>
+        <div className="table-card">
+          <div className="table-header">
+            <h2 className="table-title">Lista de Laboratórios</h2>
+          </div>
+          <div className="table-wrapper">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Capacidade</th>
+                  <th>Localização</th>
+                  <th>Status</th>
+                  <th>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {items.map(item => (
+                  <tr key={item._id}>
+                    <td><strong>{item.nome}</strong></td>
+                    <td>
+                      <span style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                        <FaUsers style={{color: 'var(--primary)'}} />
+                        {item.capacidade} alunos
+                      </span>
+                    </td>
+                    <td>{item.localizacao || '-'}</td>
+                    <td>
+                      <span className={`status-badge ${
+                        item.status ? 'status-active' : 'status-inactive'
+                      }`}>
+                        {item.status ? 'Ativo' : 'Inativo'}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="action-buttons">
+                        <button 
+                          className="btn btn-success btn-sm" 
+                          onClick={() => handleEdit(item)}
+                          title="Editar"
+                        >
+                          <FaEdit />
+                        </button>
+                        <button 
+                          className="btn btn-danger btn-sm" 
+                          onClick={() => handleDelete(item._id)}
+                          title="Excluir"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {items.length === 0 && (
+                  <tr>
+                    <td colSpan="5" style={{ textAlign: 'center', padding: '2rem', color: 'var(--gray-500)' }}>
+                      Nenhum laboratório cadastrado
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

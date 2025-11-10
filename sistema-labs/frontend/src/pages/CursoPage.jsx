@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { FaSave, FaEdit, FaTrash, FaTimes, FaSun, FaMoon, FaCloudSun } from 'react-icons/fa';
 import { createCrudService } from '../services/api';
 
 const cursoService = createCrudService('/cursos');
@@ -60,11 +61,13 @@ function CursoPage() {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await cursoService.delete(id);
-      loadItems();
-    } catch (error) {
-      console.error('Error deleting item:', error);
+    if (window.confirm('Tem certeza que deseja excluir este curso?')) {
+      try {
+        await cursoService.delete(id);
+        loadItems();
+      } catch (error) {
+        console.error('Error deleting item:', error);
+      }
     }
   };
 
@@ -80,100 +83,175 @@ function CursoPage() {
     setFormData({...formData, turnos: newTurnos});
   };
 
+  const getTurnoIcon = (turno) => {
+    switch(turno) {
+      case 'Manhã': return <FaSun />;
+      case 'Tarde': return <FaCloudSun />;
+      case 'Noite': return <FaMoon />;
+      default: return null;
+    }
+  };
+
   return (
     <div>
-      <h1>Cursos</h1>
-      <div className="form-container">
-        <div className="form-section">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Instituição:</label>
-              <select
-                value={formData.instituicaoId}
-                onChange={(e) => setFormData({...formData, instituicaoId: e.target.value})}
-                required
-              >
-                <option value="">Selecione</option>
-                {instituicoes.map(inst => (
-                  <option key={inst._id} value={inst._id}>{inst.nome}</option>
-                ))}
-              </select>
-            </div>
-            <div className="form-group">
-              <label>Nome:</label>
-              <input
-                type="text"
-                value={formData.nome}
-                onChange={(e) => setFormData({...formData, nome: e.target.value})}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Turnos:</label>
-              <div className="checkbox-group">
-                {['Manhã', 'Tarde', 'Noite'].map(turno => (
-                  <div key={turno} className="checkbox-item">
-                    <input
-                      type="checkbox"
-                      checked={formData.turnos.includes(turno)}
-                      onChange={() => handleTurnoChange(turno)}
-                    />
-                    <label>{turno}</label>
-                  </div>
-                ))}
+      <div className="page-header">
+        <h1 className="page-title">Cursos</h1>
+        <p className="page-subtitle">Gerencie os cursos oferecidos pelas instituições</p>
+      </div>
+      
+      <div className="content-grid">
+        <div className="card">
+          <div className="card-header">
+            <h2 className="card-title">
+              {editingId ? 'Editar Curso' : 'Novo Curso'}
+            </h2>
+          </div>
+          <div className="card-body">
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label">Instituição</label>
+                <select
+                  className="form-input"
+                  value={formData.instituicaoId}
+                  onChange={(e) => setFormData({...formData, instituicaoId: e.target.value})}
+                  required
+                >
+                  <option value="">Selecione uma instituição</option>
+                  {instituicoes.map(inst => (
+                    <option key={inst._id} value={inst._id}>{inst.nome}</option>
+                  ))}
+                </select>
               </div>
-            </div>
-            <div className="form-group">
-              <label>
+              
+              <div className="form-group">
+                <label className="form-label">Nome do Curso</label>
                 <input
-                  type="checkbox"
-                  checked={formData.status}
-                  onChange={(e) => setFormData({...formData, status: e.target.checked})}
+                  type="text"
+                  className="form-input"
+                  value={formData.nome}
+                  onChange={(e) => setFormData({...formData, nome: e.target.value})}
+                  placeholder="Ex: Ciência da Computação"
+                  required
                 />
-                Ativo
-              </label>
-            </div>
-            <button type="submit" className="btn btn-primary">
-              {editingId ? 'Atualizar' : 'Criar'}
-            </button>
-            {editingId && (
-              <button type="button" className="btn btn-cancel" onClick={handleCancel}>
-                Cancelar
-              </button>
-            )}
-          </form>
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">Turnos Disponíveis</label>
+                <div className="checkbox-group">
+                  {['Manhã', 'Tarde', 'Noite'].map(turno => (
+                    <div key={turno} className="checkbox-item">
+                      <input
+                        type="checkbox"
+                        className="checkbox"
+                        id={`turno-${turno}`}
+                        checked={formData.turnos.includes(turno)}
+                        onChange={() => handleTurnoChange(turno)}
+                      />
+                      <label htmlFor={`turno-${turno}`} className="form-label">
+                        {getTurnoIcon(turno)}
+                        {turno}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <div className="form-checkbox">
+                  <input
+                    type="checkbox"
+                    className="checkbox"
+                    id="status"
+                    checked={formData.status}
+                    onChange={(e) => setFormData({...formData, status: e.target.checked})}
+                  />
+                  <label htmlFor="status" className="form-label">Curso Ativo</label>
+                </div>
+              </div>
+              
+              <div className="action-buttons">
+                <button type="submit" className="btn btn-primary">
+                  <FaSave />
+                  {editingId ? 'Atualizar' : 'Criar'}
+                </button>
+                {editingId && (
+                  <button type="button" className="btn btn-secondary" onClick={handleCancel}>
+                    <FaTimes />
+                    Cancelar
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
         
-        <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Instituição</th>
-                <th>Nome</th>
-                <th>Turnos</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map(item => (
-                <tr key={item._id}>
-                  <td>{item.instituicaoId?.nome}</td>
-                  <td>{item.nome}</td>
-                  <td>{item.turnos?.join(', ')}</td>
-                  <td>{item.status ? 'Ativo' : 'Inativo'}</td>
-                  <td>
-                    <button className="btn btn-edit" onClick={() => handleEdit(item)}>
-                      Editar
-                    </button>
-                    <button className="btn btn-delete" onClick={() => handleDelete(item._id)}>
-                      Excluir
-                    </button>
-                  </td>
+        <div className="table-card">
+          <div className="table-header">
+            <h2 className="table-title">Lista de Cursos</h2>
+          </div>
+          <div className="table-wrapper">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Instituição</th>
+                  <th>Nome</th>
+                  <th>Turnos</th>
+                  <th>Status</th>
+                  <th>Ações</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {items.map(item => (
+                  <tr key={item._id}>
+                    <td>{item.instituicaoId?.nome}</td>
+                    <td><strong>{item.nome}</strong></td>
+                    <td>
+                      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                        {item.turnos?.map(turno => (
+                          <span key={turno} style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                            {getTurnoIcon(turno)}
+                            {turno}
+                          </span>
+                        ))}
+                      </div>
+                    </td>
+                    <td>
+                      <span className={`status-badge ${
+                        item.status ? 'status-active' : 'status-inactive'
+                      }`}>
+                        {item.status ? 'Ativo' : 'Inativo'}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="action-buttons">
+                        <button 
+                          className="btn btn-success btn-sm" 
+                          onClick={() => handleEdit(item)}
+                          title="Editar"
+                        >
+                          <FaEdit />
+                        </button>
+                        <button 
+                          className="btn btn-danger btn-sm" 
+                          onClick={() => handleDelete(item._id)}
+                          title="Excluir"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {items.length === 0 && (
+                  <tr>
+                    <td colSpan="5" style={{ textAlign: 'center', padding: '2rem', color: 'var(--gray-500)' }}>
+                      Nenhum curso cadastrado
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
