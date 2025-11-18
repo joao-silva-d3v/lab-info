@@ -1,4 +1,112 @@
-# 🎨 Guia do Novo Design - Lab System
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 200px 0 20px 0;">
+
+<div style="font-size: 24px; margin-bottom: 12px;"><strong>Amazon Q</strong></div>
+<div style="background: rgba(128, 128, 128, 0.15); border: 1px solid rgba(128, 128, 128, 0.25); border-radius: 8px; padding: 8px; margin: 4px 0; text-align: center;">
+<div style="font-size: 14px; margin-bottom: 4px;"><strong>Did you know?</strong></div>
+<div>Ask Q to review your code and see results in the code issues panel!</div>
+</div>
+
+Select code & ask me to explain, debug or optimize it, or type `/` for quick actions
+
+</div>
+
+---
+
+ **@prompt-visual.md**
+
+---
+
+
+Vou implementar o novo design system conforme especificado. Primeiro, vou verificar a estrutura atual do projeto e depois implementar todas as mudanças necessárias.
+
+---
+
+
+Agora vou implementar o novo design system. Começarei instalando os ícones e depois implementando todos os arquivos necessários.
+
+---
+
+Instalando a biblioteca react-icons conforme especificado no prompt
+
+---
+
+shell
+
+---
+
+
+Agora vou implementar o arquivo CSS com todas as variáveis e classes utilitárias:
+
+---
+
+Implementando o novo design system com variáveis CSS e classes utilitárias
+
+---
+
+
+Agora vou implementar o layout principal com sidebar no App.jsx:
+
+---
+
+Implementando o layout principal com sidebar fixa e navegação com ícones
+
+---
+
+
+Agora vou atualizar todas as páginas seguindo a estrutura base do design. Começarei com a InstituicaoPage:
+
+---
+
+Atualizando InstituicaoPage com o novo design system
+
+---
+
+Atualizando CursoPage com o novo design system
+
+---
+
+Atualizando DisciplinaPage com o novo design system
+
+---
+
+Atualizando ProfessorPage com o novo design system
+
+---
+
+Atualizando LaboratorioPage com o novo design system
+
+---
+
+Atualizando BlocoPage com o novo design system
+
+---
+
+Atualizando AlocacaoPage com o novo design system
+
+---
+
+Atualizando ConsultaHorarioPage com o novo design system
+
+---
+
+
+Agora vou verificar se é necessário instalar o react-router-dom:
+
+---
+
+
+Perfeito! O react-router-dom já está instalado. Agora vou adicionar algumas melhorias no CSS para o botão secundário que foi usado no código:
+
+---
+
+Adicionando estilo para o botão secundário que foi usado nas páginas
+
+---
+
+
+Agora vou testar se o projeto está funcionando corretamente:
+
+---
 
 ## ✨ Melhorias Implementadas
 
@@ -19,7 +127,7 @@
 - **Tabelas**: Headers estilizados e hover effects
 - **Botões**: Gradientes e ícones integrados
 
-## 🛠️ Como Aplicar nas Outras Páginas
+## 🛠️ Aplicação nas Outras Páginas
 
 ### Estrutura Base:
 ```jsx
@@ -112,7 +220,7 @@ function ExemploPage() {
 - `.status-active` - Status ativo (verde)
 - `.status-inactive` - Status inativo (vermelho)
 
-## 🎯 Páginas para atualizar
+## 🎯 Páginas atualizadas
 
 ✅ **App.jsx** - Layout sidebar com ícones e navegação moderna
 ✅ **InstituicaoPage.jsx** - Template base com cards e formulários
@@ -148,14 +256,10 @@ function ExemploPage() {
 --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 ```
 
-## 💡 O que pode usar
+## 💡 Dicas
 
 1. **Ícones**: Use react-icons/fa para consistência
 2. **Confirmações**: Use window.confirm() para exclusões
 3. **Feedback**: Adicione alerts para sucesso/erro
 4. **Estados vazios**: Sempre mostre mensagem quando não há dados
 5. **Responsividade**: O design já é responsivo por padrão
-
-## 🚀 Passo
-
-Para aplicar o novo design nas páginas restantes, siga o padrão das páginas já atualizadas, especialmente a **InstituicaoPage.jsx** que serve como template base.
